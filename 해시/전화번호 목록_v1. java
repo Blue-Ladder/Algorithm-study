@@ -1,0 +1,41 @@
+class Solution {
+    static class Node{
+        Node[] Number = new Node[10];
+        boolean end = false;
+        boolean visited = false;
+    }
+    
+    public boolean solution(String[] phone_book) {
+        boolean answer = true;
+        
+        Node root = new Node();
+        
+        for(String phone : phone_book){
+            Node curNode = root;
+            for (int i = 0; i < phone.length(); i++){
+                int curNum = phone.charAt(i) - '0';
+                
+                // 해당 노드가 비었으면 새로 생성
+                if(curNode.Number[curNum] == null){
+                    curNode.Number[curNum] = new Node();
+                }
+                
+                // 내가 방문한 노드가 누군가의 끝 노드면 false
+                if(curNode.Number[curNum].end) return false;
+                
+                // 현재노드를 방문한 상태로 변경하고, 다음 노드로 이동
+                curNode.visited = true;
+                curNode = curNode.Number[curNum];
+                
+            }
+            
+            //반복문이 끝나고 나의 가장 마지막 노드가 누군가가 지나갔던 노드면 false
+            if(curNode.visited) return false;
+            
+            curNode.end = true;
+        }
+        
+        
+        return answer;
+    }
+}
